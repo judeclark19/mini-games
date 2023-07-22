@@ -1,5 +1,6 @@
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp"; // Your Firebase configuration import
+import { NextRequest } from "next/server";
 
 export async function GET() {
   try {
@@ -15,6 +16,34 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error fetching data:", error);
+
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
+// POST new game
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    console.log(body);
+    const gamesRef = collection(firestore, "games");
+
+    addDoc(gamesRef, body)
+      .then((docRef) => {
+        console.log("Document has been added successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return new Response(JSON.stringify({ success: "game added", body }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error creating new game:", error);
 
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       headers: { "Content-Type": "application/json" },
