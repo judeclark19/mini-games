@@ -1,5 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { doc, getFirestore, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import {
   GoogleAuthProvider,
   browserSessionPersistence,
@@ -36,36 +46,46 @@ setPersistence(auth, browserSessionPersistence)
   .catch((error) => {
     console.log("Error setting session persistence:", error);
   });
-
 const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       const name = result.user.displayName;
       const email = result.user.email;
-      console.log(name, email);
 
       localStorage.setItem("name", name as string);
       localStorage.setItem("email", email as string);
 
-      // Create a user document in Firestore with the user's UID as the document ID
-
       const userDocRef = doc(firestore, "users", result.user.uid);
 
-      // Set the user document fields
-      setDoc(userDocRef, {
-        createdAt: serverTimestamp(), // Firestore server timestamp
-        username: name, // Using the display name as the username in this case
-        email: email,
-      })
-        .then(() => {
-          console.log("User document created successfully");
-          // Additional code after creating user document if needed
+      getDoc(userDocRef)
+        .then((docSnap) => {
+          if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+          } else {
+            console.log("No such document!");
+            setDoc(userDocRef, {
+              createdAt: serverTimestamp(), // Firestore server timestamp
+              username: name, // Using the display name as the username in this case
+              email: email,
+            })
+              .then(() => {
+                console.log("User document created successfully");
+                // Additional code after creating user document if needed
+              })
+              .catch((error) => {
+                console.error("Error creating user document:", error);
+                // Handle error if necessary
+              });
+          }
         })
         .catch((error) => {
-          console.error("Error creating user document:", error);
-          // Handle error if necessary
+          console.error("Error getting document:", error);
         });
     })
+    // .then(() => {
+    //   // reload page
+    //   window.location.reload();
+    // })
     .catch((error) => {
       console.log(error);
     });
@@ -138,17 +158,18 @@ const signOutFirebase = () => {
 };
 
 onAuthStateChanged(auth, (user) => {
+  console.log("onAuthStateChanged from clientApp.ts");
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
 
     const uid = user.uid;
-    console.log("the logged in user is", user, uid);
+    // console.log("the logged in user is", user, uid);
     // ...
   } else {
     // User is signed out
     // ...
-    console.log("no user logged in");
+    // console.log("no user logged in");
   }
 });
 

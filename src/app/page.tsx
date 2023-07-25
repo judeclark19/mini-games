@@ -8,13 +8,39 @@ import {
   signInWithGoogle,
   signUpWithEmail,
   signOutFirebase,
+  auth,
 } from "@/firebase/clientApp";
+import Header from "@/components/Header";
+import { User, onAuthStateChanged } from "firebase/auth";
 
 const Home: NextPage = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [games, setGames] = useState<any[]>([]);
   const [scores, setScores] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+  useEffect(() => {
+    console.log("onAuthStateChanged from page.tsx");
+
+    // Set up the onAuthStateChanged listener
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        setLoggedInUser(user);
+      } else {
+        // User is signed out
+        setLoggedInUser(null);
+      }
+    });
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    console.log("loggedInUser changed from page.tsx");
+    console.log(loggedInUser?.email);
+  }, [loggedInUser]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +73,7 @@ const Home: NextPage = () => {
     <>
       <div className={styles.container}>
         <main className={styles.main}>
+          <Header loggedInUser={loggedInUser} />
           <button onClick={signInWithGoogle}>Sign in with google</button>
           <>
             <form
