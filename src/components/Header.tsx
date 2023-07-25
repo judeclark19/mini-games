@@ -1,8 +1,20 @@
+"use client";
+
 import { User } from "firebase/auth";
-import React from "react";
+import styled from "styled-components";
+
+const StyledHeader = styled.h1`
+  color: red;
+`;
 
 function Header({ loggedInUser }: { loggedInUser: User }) {
-  return <>{loggedInUser && <h1>Logged in as {loggedInUser.email}</h1>}</>;
+  return (
+    <>
+      {loggedInUser && (
+        <StyledHeader>Logged in as {loggedInUser.email}</StyledHeader>
+      )}
+    </>
+  );
 }
 
 export default Header;
