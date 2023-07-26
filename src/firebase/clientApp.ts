@@ -1,51 +1,23 @@
-import { initializeApp } from "firebase/app";
+// setPersistence(auth, browserSessionPersistence)
+//   .then(() => {
+//     // Existing and future Auth states are now persisted in the current session
+//     // You can also use 'local' or 'none' if you prefer different persistence options
+//     console.log("Session persistence enabled");
+//   })
+//   .catch((error) => {
+//     console.log("Error setting session persistence:", error);
+//   });
+
 import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  serverTimestamp,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import {
-  GoogleAuthProvider,
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
-  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { auth, firestore, provider } from ".";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
-const app = initializeApp({
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-});
-
-const firestore = getFirestore();
-const auth = getAuth(app);
-
-const provider = new GoogleAuthProvider();
-
-setPersistence(auth, browserSessionPersistence)
-  .then(() => {
-    // Existing and future Auth states are now persisted in the current session
-    // You can also use 'local' or 'none' if you prefer different persistence options
-    console.log("Session persistence enabled");
-  })
-  .catch((error) => {
-    console.log("Error setting session persistence:", error);
-  });
 const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
@@ -157,21 +129,21 @@ const signOutFirebase = () => {
     });
 };
 
-onAuthStateChanged(auth, (user) => {
-  console.log("onAuthStateChanged from clientApp.ts");
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
+// onAuthStateChanged(auth, (user) => {
+//   console.log("onAuthStateChanged from clientApp.ts");
+//   if (user) {
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/auth.user
 
-    const uid = user.uid;
-    // console.log("the logged in user is", user, uid);
-    // ...
-  } else {
-    // User is signed out
-    // ...
-    // console.log("no user logged in");
-  }
-});
+//     const uid = user.uid;
+//     // console.log("the logged in user is", user, uid);
+//     // ...
+//   } else {
+//     // User is signed out
+//     // ...
+//     // console.log("no user logged in");
+//   }
+// });
 
 export {
   firestore,
