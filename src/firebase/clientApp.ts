@@ -1,13 +1,3 @@
-// setPersistence(auth, browserSessionPersistence)
-//   .then(() => {
-//     // Existing and future Auth states are now persisted in the current session
-//     // You can also use 'local' or 'none' if you prefer different persistence options
-//     console.log("Session persistence enabled");
-//   })
-//   .catch((error) => {
-//     console.log("Error setting session persistence:", error);
-//   });
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -36,7 +26,7 @@ const signInWithGoogle = () => {
           } else {
             console.log("No such document!");
             setDoc(userDocRef, {
-              createdAt: serverTimestamp(), // Firestore server timestamp
+              createdAt: serverTimestamp(),
               username: name, // Using the display name as the username in this case
               email: email,
             })
@@ -54,10 +44,6 @@ const signInWithGoogle = () => {
           console.error("Error getting document:", error);
         });
     })
-    // .then(() => {
-    //   // reload page
-    //   window.location.reload();
-    // })
     .catch((error) => {
       console.log(error);
     });
@@ -75,11 +61,10 @@ const signUpWithEmail = (username: string, email: string, password: string) => {
         })
           .then(() => {
             console.log("Display name set successfully:", username);
-            // Additional code after setting the display name if needed
 
             const userDocRef = doc(firestore, "users", user.uid);
             setDoc(userDocRef, {
-              createdAt: serverTimestamp(), // Firestore server timestamp
+              createdAt: serverTimestamp(),
               username: username,
               email: email,
             }).then(() => {
@@ -100,7 +85,6 @@ const signUpWithEmail = (username: string, email: string, password: string) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // Handle error if necessary
     });
 };
 
@@ -109,41 +93,25 @@ const signInWithEmail = (email: string, password: string) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+      console.log("User signed in", user);
       // ...
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
     });
 };
 
 const signOutFirebase = () => {
   signOut(auth)
     .then(() => {
-      // Sign-out successful.
       console.log("signed out");
     })
     .catch((error) => {
-      // An error happened.
       console.log("error signing out", error);
     });
 };
-
-// onAuthStateChanged(auth, (user) => {
-//   console.log("onAuthStateChanged from clientApp.ts");
-//   if (user) {
-//     // User is signed in, see docs for a list of available properties
-//     // https://firebase.google.com/docs/reference/js/auth.user
-
-//     const uid = user.uid;
-//     // console.log("the logged in user is", user, uid);
-//     // ...
-//   } else {
-//     // User is signed out
-//     // ...
-//     // console.log("no user logged in");
-//   }
-// });
 
 export {
   firestore,

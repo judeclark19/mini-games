@@ -1,27 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  serverTimestamp,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import {
-  GoogleAuthProvider,
-  browserSessionPersistence,
-  createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
-  setPersistence,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

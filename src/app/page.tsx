@@ -1,7 +1,6 @@
 "use client";
 
 import type { NextPage } from "next";
-import Head from "next/head";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import {
@@ -9,6 +8,7 @@ import {
   signUpWithEmail,
   signOutFirebase,
   auth,
+  signInWithEmail,
 } from "@/firebase/clientApp";
 import Header from "@/components/Header";
 import { User, onAuthStateChanged } from "firebase/auth";
@@ -21,8 +21,6 @@ const Home: NextPage = () => {
 
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   useEffect(() => {
-    console.log("onAuthStateChanged from page.tsx");
-
     // Set up the onAuthStateChanged listener
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -36,11 +34,6 @@ const Home: NextPage = () => {
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    console.log("loggedInUser changed from page.tsx");
-    console.log(loggedInUser?.email);
-  }, [loggedInUser]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +69,12 @@ const Home: NextPage = () => {
           <Header loggedInUser={loggedInUser} />
           <button onClick={signInWithGoogle}>Sign in with google</button>
           <>
+            sign up
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target as HTMLFormElement);
-                // console.log(formData.get("email"));
-                // console.log(formData.get("password"));
+
                 signUpWithEmail(
                   formData.get("username") as string,
                   formData.get("email") as string,
@@ -90,6 +83,22 @@ const Home: NextPage = () => {
               }}
             >
               <input type="text" placeholder="username" name="username" />
+              <input type="email" placeholder="email" name="email" />
+              <input type="password" placeholder="password" name="password" />
+              <button type="submit">submit</button>
+            </form>
+            log in
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target as HTMLFormElement);
+
+                signInWithEmail(
+                  formData.get("email") as string,
+                  formData.get("password") as string
+                );
+              }}
+            >
               <input type="email" placeholder="email" name="email" />
               <input type="password" placeholder="password" name="password" />
               <button type="submit">submit</button>

@@ -1,6 +1,5 @@
 import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 
 export async function GET() {

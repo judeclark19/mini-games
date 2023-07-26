@@ -7,7 +7,7 @@ const StyledHeader = styled.h1`
   color: red;
 `;
 
-function Header({ loggedInUser }: { loggedInUser: User }) {
+function Header({ loggedInUser }: { loggedInUser: User | null }) {
   return (
     <>
       {loggedInUser && (

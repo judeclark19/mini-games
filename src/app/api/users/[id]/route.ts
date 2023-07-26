@@ -1,7 +1,11 @@
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp"; // Your Firebase configuration import
+import { NextRequest } from "next/server";
 
-export async function GET(request, { params }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const userRef = doc(firestore, "users", params.id);
     const userSnapshot = await getDoc(userRef);
