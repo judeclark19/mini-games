@@ -11,16 +11,10 @@ import {
   signInWithEmail,
 } from "@/firebase/clientApp";
 import Header from "@/components/Header";
-import {
-  User,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchUsers, fetchGames } from "@/lib/queries";
-import { GameDoc, UserDoc } from "@/lib/types";
-import UserScoreList from "@/components/UserScoreList";
 import UsersList from "@/components/UsersList";
 
 const registerEmail = async ({
@@ -101,11 +95,6 @@ const Home: NextPage = () => {
                 const email = formData.get("email") as string;
                 const password = formData.get("password") as string;
 
-                // signUpWithEmail(
-                //   formData.get("username") as string,
-                //   formData.get("email") as string,
-                //   formData.get("password") as string
-                // );
                 newUser.mutate({ username, email, password });
               }}
             >
@@ -132,45 +121,9 @@ const Home: NextPage = () => {
             </form>
             <button onClick={signOutFirebase}>Sign out</button>
           </>
-          {/* <h1>List of games</h1>
-          {games.isLoading ? (
-            <p>loading</p>
-          ) : (
-            <div className={styles.grid}>
-              {games.data.map((game: GameDoc) => {
-                const { title, id } = game;
-                return (
-                  <div key={id} className={styles.card}>
-                    <h2>{title}</h2>
-                  </div>
-                );
-              })}
-            </div>
-          )} */}
           {/* users */}
           <h1 className={styles.title}>list of users</h1>
-          {users.isLoading ? (
-            <p>loading</p>
-          ) : (
-            <UsersList />
-            // <div className={styles.grid}>
-            //   {users.data
-            //     .sort((a: UserDoc, b: UserDoc) => {
-            //       const dateA = new Date(a.createdAt.seconds * 1000);
-            //       const dateB = new Date(b.createdAt.seconds * 1000);
-            //       return dateB.getTime() - dateA.getTime();
-            //     })
-            //     .map((user: UserDoc) => {
-            //       const { username, email, id } = user;
-            //       return (
-            //         <div key={id} className={styles.card}>
-            //           <h2>{username}</h2>
-            //           <p>{email}</p>
-            //         </div>
-            //       );
-            //     })}
-            // </div>
-          )}
+          {users.isLoading ? <p>loading</p> : <UsersList />}
         </main>
       </div>
     </>

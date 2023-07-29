@@ -1,4 +1,4 @@
-import { fetchGamesById, fetchScoresByUserId } from "@/lib/queries";
+import { fetchScoresByUserId } from "@/lib/queries";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
