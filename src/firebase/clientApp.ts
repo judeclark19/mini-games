@@ -8,45 +8,41 @@ import {
 import { auth, firestore, provider } from ".";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
-const signInWithGoogle = () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const name = result.user.displayName;
-      const email = result.user.email;
+const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
 
-      localStorage.setItem("name", name as string);
-      localStorage.setItem("email", email as string);
+    const name = result.user.displayName;
+    const email = result.user.email;
 
-      const userDocRef = doc(firestore, "users", result.user.uid);
+    localStorage.setItem("name", name as string);
+    localStorage.setItem("email", email as string);
 
-      getDoc(userDocRef)
-        .then((docSnap) => {
-          if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-          } else {
-            console.log("No such document!");
-            setDoc(userDocRef, {
-              createdAt: serverTimestamp(),
-              username: name, // Using the display name as the username in this case
-              email: email,
-            })
-              .then(() => {
-                console.log("User document created successfully");
-                // Additional code after creating user document if needed
-              })
-              .catch((error) => {
-                console.error("Error creating user document:", error);
-                // Handle error if necessary
-              });
-          }
-        })
-        .catch((error) => {
-          console.error("Error getting document:", error);
+    const userDocRef = doc(firestore, "users", result.user.uid);
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+      try {
+        await setDoc(userDocRef, {
+          createdAt: serverTimestamp(),
+          username: name, // Using the display name as the username in this case
+          email: email,
         });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+
+        console.log("User document created successfully");
+        // Additional code after creating user document if needed
+      } catch (error) {
+        console.error("Error creating user document:", error);
+        // Handle error if necessary
+      }
+    }
+    return Promise.resolve(); // Add this line
+  } catch (error) {
+    console.error("Error getting document or sign in:", error);
+  }
 };
 
 const signUpWithEmail = (username: string, email: string, password: string) => {

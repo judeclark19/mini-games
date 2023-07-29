@@ -23,7 +23,7 @@ import { GameDoc, UserDoc } from "@/lib/types";
 import UserScoreList from "@/components/UserScoreList";
 import UsersList from "@/components/UsersList";
 
-const register = async ({
+const registerEmail = async ({
   username,
   email,
   password,
@@ -35,6 +35,10 @@ const register = async ({
   return await signUpWithEmail(username, email, password);
 };
 
+const registerGoogle = async () => {
+  return await signInWithGoogle();
+};
+
 const Home: NextPage = () => {
   const queryClient = useQueryClient();
 
@@ -43,7 +47,14 @@ const Home: NextPage = () => {
     queryFn: fetchUsers,
   });
 
-  const newUser = useMutation(register, {
+  const newUser = useMutation(registerEmail, {
+    onSuccess: () => {
+      console.log("SUCCESS");
+      queryClient.invalidateQueries(["users"]);
+    },
+  });
+
+  const newGoogleUser = useMutation(registerGoogle, {
     onSuccess: () => {
       console.log("SUCCESS");
       queryClient.invalidateQueries(["users"]);
@@ -73,7 +84,13 @@ const Home: NextPage = () => {
         <main className={styles.main}>
           {/* header */}
           <Header loggedInUser={loggedInUser} />
-          <button onClick={signInWithGoogle}>Sign in with google</button>
+          <button
+            onClick={() => {
+              newGoogleUser.mutate();
+            }}
+          >
+            Sign in with google
+          </button>
           <>
             sign up with email
             <form
