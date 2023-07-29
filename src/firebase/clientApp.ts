@@ -50,20 +50,20 @@ const signInWithGoogle = () => {
 };
 
 const signUpWithEmail = (username: string, email: string, password: string) => {
-  createUserWithEmailAndPassword(auth, email, password)
+  return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
 
       // Set the display name of the user using the incoming username
       if (auth.currentUser) {
-        updateProfile(auth.currentUser, {
+        return updateProfile(auth.currentUser, {
           displayName: username,
         })
           .then(() => {
             console.log("Display name set successfully:", username);
 
             const userDocRef = doc(firestore, "users", user.uid);
-            setDoc(userDocRef, {
+            return setDoc(userDocRef, {
               createdAt: serverTimestamp(),
               username: username,
               email: email,
@@ -76,15 +76,15 @@ const signUpWithEmail = (username: string, email: string, password: string) => {
             console.error("Error setting display name:", error);
             // Handle error if necessary
           });
-
-        console.log("User created", user);
-        // Additional code after user signup if needed
+      } else {
+        throw new Error("No current user");
       }
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+      throw error;
     });
 };
 
