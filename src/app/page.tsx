@@ -74,58 +74,92 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          {/* header */}
-          <Header loggedInUser={loggedInUser} />
-          <button
-            onClick={() => {
-              newGoogleUser.mutate();
-            }}
-          >
-            Sign in with google
-          </button>
-          <>
-            sign up with email
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target as HTMLFormElement);
-                const username = formData.get("username") as string;
-                const email = formData.get("email") as string;
-                const password = formData.get("password") as string;
+      landing page
+      {/* <Header loggedInUser={loggedInUser} />
+      <button
+        onClick={() => {
+          newGoogleUser.mutate();
+        }}
+      >
+        Sign in with google
+      </button>
+      <>
+        sign up with email
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const username = formData.get("username") as string;
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
 
-                newUser.mutate({ username, email, password });
-              }}
-            >
-              <input type="text" placeholder="username" name="username" />
-              <input type="email" placeholder="email" name="email" />
-              <input type="password" placeholder="password" name="password" />
-              <button type="submit">submit</button>
-            </form>
-            log in
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target as HTMLFormElement);
+            newUser.mutate({ username, email, password });
+          }}
+        > <Header loggedInUser={loggedInUser} />
+      <button
+        onClick={() => {
+          newGoogleUser.mutate();
+        }}
+      >
+        Sign in with google
+      </button>
+      <>
+        sign up with email
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const username = formData.get("username") as string;
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
 
-                signInWithEmail(
-                  formData.get("email") as string,
-                  formData.get("password") as string
-                );
-              }}
-            >
-              <input type="email" placeholder="email" name="email" />
-              <input type="password" placeholder="password" name="password" />
-              <button type="submit">submit</button>
-            </form>
-            <button onClick={signOutFirebase}>Sign out</button>
-          </>
-          {/* users */}
-          <h1 className={styles.title}>list of users</h1>
-          {users.isLoading ? <p>loading</p> : <UsersList />}
-        </main>
-      </div>
+            newUser.mutate({ username, email, password });
+          }}
+        >
+          <input type="text" placeholder="username" name="username" />
+          <input type="email" placeholder="email" name="email" />
+          <input type="password" placeholder="password" name="password" />
+          <button type="submit">submit</button>
+        </form>
+        log in
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+
+            signInWithEmail(
+              formData.get("email") as string,
+              formData.get("password") as string
+            );
+          }}
+        >
+          <input type="email" placeholder="email" name="email" />
+          <input type="password" placeholder="password" name="password" />
+          <button type="submit">submit</button>
+        </form>
+        <button onClick={signOutFirebase}>Sign out</button>
+      </>
+
+      <h1 className={styles.title}>list of users</h1>
+      {users.isLoading ? <p>loading</p> : <UsersList />}
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+
+            signInWithEmail(
+              formData.get("email") as string,
+              formData.get("password") as string
+            );
+          }}
+        >
+          <input type="email" placeholder="email" name="email" />
+          <input type="password" placeholder="password" name="password" />
+          <button type="submit">submit</button>
+        </form>
+        <button onClick={signOutFirebase}>Sign out</button>
+      </>
+
+      <h1 className={styles.title}>list of users</h1>
+      {users.isLoading ? <p>loading</p> : <UsersList />} */}
     </>
   );
 };

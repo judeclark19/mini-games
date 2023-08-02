@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import TanstackQuery from "./tanstackQuery";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <TanstackQuery>{children}</TanstackQuery>
-        </StyledComponentsRegistry>
+        <main>
+          <StyledComponentsRegistry>
+            <TanstackQuery>
+              <Header />
+              {children}
+            </TanstackQuery>
+          </StyledComponentsRegistry>
+        </main>
       </body>
     </html>
   );
