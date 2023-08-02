@@ -3,7 +3,14 @@
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "@/firebase/clientApp";
-import { HeaderContent, StyledHeader } from "./Header.styles";
+import {
+  HeaderContent,
+  HeaderRight,
+  LoggedInUser,
+  LoginButton,
+  StyledHeader,
+} from "./Header.styles";
+import GamesListDropdown from "./GamesListDropdown";
 
 function Header() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -27,17 +34,20 @@ function Header() {
     <StyledHeader>
       <HeaderContent>
         <h1>Mini Games</h1>
-        <div>
+        <HeaderRight>
           {/* the right */}
-          <div>
-            {loggedInUser
-              ? `Logged in as ${loggedInUser.email}`
-              : `Playing as Guest`}
-          </div>
-        </div>
-        {/* {loggedInUser && (
-        <StyledHeader>Logged in as {loggedInUser.email}</StyledHeader>
-      )} */}
+          <GamesListDropdown />
+          <LoggedInUser>
+            {loggedInUser ? (
+              `Logged in as ${loggedInUser.email}`
+            ) : (
+              <>
+                Playing as <span>Guest</span>
+              </>
+            )}
+          </LoggedInUser>
+          {!loggedInUser && <LoginButton>Log In or Sign Up</LoginButton>}
+        </HeaderRight>
       </HeaderContent>
     </StyledHeader>
   );
