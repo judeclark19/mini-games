@@ -51,6 +51,25 @@ a {
   text-decoration: none;
 }
 
+.actionButton {
+  background-color: var(--jazz-blue);
+  color: white;
+  padding: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.actionButton:hover {
+  background-color: var(--bright-orange);
+  border: 2px solid var(--shrimp-toast);
+
+  text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

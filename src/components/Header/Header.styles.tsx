@@ -16,6 +16,8 @@ export const HeaderContent = styled.div`
   align-items: center;
 `;
 
+export const HeaderLeft = styled.div``;
+
 export const HeaderRight = styled.div`
   display: flex;
   gap: 2rem;
@@ -27,25 +29,6 @@ export const LoggedInUser = styled.div`
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--bright-orange);
-  }
-`;
-
-export const LoginButton = styled.button`
-  background-color: var(--jazz-blue);
-  color: white;
-  padding: 0.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: var(--bright-orange);
-    border: 2px solid var(--shrimp-toast);
-    scale: 1.06;
-
-    text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
   }
 `;
 

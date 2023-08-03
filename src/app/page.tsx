@@ -29,10 +29,6 @@ const registerEmail = async ({
   return await signUpWithEmail(username, email, password);
 };
 
-const registerGoogle = async () => {
-  return await signInWithGoogle();
-};
-
 const Home: NextPage = () => {
   const queryClient = useQueryClient();
 
@@ -42,13 +38,6 @@ const Home: NextPage = () => {
   });
 
   const newUser = useMutation(registerEmail, {
-    onSuccess: () => {
-      console.log("SUCCESS");
-      queryClient.invalidateQueries(["users"]);
-    },
-  });
-
-  const newGoogleUser = useMutation(registerGoogle, {
     onSuccess: () => {
       console.log("SUCCESS");
       queryClient.invalidateQueries(["users"]);

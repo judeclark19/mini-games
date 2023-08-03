@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { auth } from "@/firebase/clientApp";
 import {
   HeaderContent,
+  HeaderLeft,
   HeaderRight,
   LoggedInUser,
   LoginButton,
   StyledHeader,
 } from "./Header.styles";
 import GamesListDropdown from "./GamesListDropdown";
+import Link from "next/link";
 
 function Header() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -33,9 +35,11 @@ function Header() {
   return (
     <StyledHeader>
       <HeaderContent>
-        <h1>Mini Games</h1>
+        <HeaderLeft>
+          <h1>Mini Games</h1>
+          <h3>An exercise in TypeScript and Next.js v13</h3>
+        </HeaderLeft>
         <HeaderRight>
-          {/* the right */}
           <GamesListDropdown />
           <LoggedInUser>
             {loggedInUser ? (
@@ -46,7 +50,11 @@ function Header() {
               </>
             )}
           </LoggedInUser>
-          {!loggedInUser && <LoginButton>Log In or Sign Up</LoginButton>}
+          {!loggedInUser && (
+            <Link href={`/login`} className="actionButton">
+              Log In or Sign Up
+            </Link>
+          )}
         </HeaderRight>
       </HeaderContent>
     </StyledHeader>

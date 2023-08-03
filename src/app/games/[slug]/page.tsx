@@ -1,4 +1,4 @@
-import SingleGamePage from "@/components/SingleGamePage/SingleGamePage";
+import SingleGamePage from "@/pages/SingleGamePage/SingleGamePage";
 import { gameSlugToTitle } from "@/lib/types";
 import React from "react";
 
