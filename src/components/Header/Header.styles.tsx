@@ -32,7 +32,9 @@ export const LoggedInUser = styled.div`
   }
 `;
 
-export const ChooseAGame = styled.div`
+export const ChooseAGame = styled.div<{
+  $isMenuOpen: boolean;
+}>`
   position: relative;
   padding: 0.5rem;
   width: 210px;
@@ -42,7 +44,9 @@ export const ChooseAGame = styled.div`
   justify-content: space-between;
 
   img {
-    transform: rotate(180deg);
+    transform: ${({ $isMenuOpen }) =>
+      !$isMenuOpen ? "rotate(180deg)" : "none"};
+    transition: all 0.3s ease-in-out;
   }
 `;
 
@@ -56,9 +60,8 @@ export const GameOptions = styled.div<{
   overflow-y: auto;
   transition: all 0.3s ease-in-out;
   position: absolute;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   background-color: var(--jazz-blue);
-  /* border-radius: 0.5rem; */
   top: 2rem;
 
   display: flex;
@@ -70,7 +73,7 @@ export const GameOptions = styled.div<{
 
 export const GameOption = styled(Link)`
   padding: 5px;
-  /* border-radius: 4px; */
+
   &:hover {
     background-color: var(--bright-orange);
     text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);

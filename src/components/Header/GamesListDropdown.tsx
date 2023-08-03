@@ -18,6 +18,7 @@ function GamesListDropdown() {
 
   return (
     <ChooseAGame
+      $isMenuOpen={isMenuOpen}
       onClick={() => {
         setIsMenuOpen(!isMenuOpen);
       }}

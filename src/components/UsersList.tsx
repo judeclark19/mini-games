@@ -1,13 +1,14 @@
 import { UserDoc } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUsers } from "@/lib/queries";
+import { fetchData } from "@/lib/queries";
 
 function UsersList() {
   const users = useQuery({
     queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryFn: () => {
+      return fetchData("/api/users");
+    },
   });
-  console.log("users fetched", users.data);
 
   return (
     <div>
