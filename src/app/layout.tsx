@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter, Nunito_Sans } from "next/font/google";
 import TanstackQuery from "./tanstackQuery";
 import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const nunitoSans = Nunito_Sans({ subsets: ["latin"] });
@@ -25,7 +26,10 @@ export default function RootLayout({
           <StyledComponentsRegistry>
             <TanstackQuery>
               <Header />
-              {children}
+              <div className="children">
+                <div>{children}</div>
+              </div>
+              <Footer />
             </TanstackQuery>
           </StyledComponentsRegistry>
         </main>

@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const StyledGoogleButton = styled.button`
   transition: background-color 0.3s, box-shadow 0.3s;
-
+  width: 220px;
+  margin: auto;
   padding: 12px 16px 12px 42px;
   border: none;
   border-radius: 3px;
@@ -41,42 +42,39 @@ export const StyledGoogleButton = styled.button`
   }
 `;
 
+export const OR = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Inter", sans-serif;
+  color: var(--jazz-blue);
+
+  div {
+    border-bottom: 3px solid var(--jazz-blue);
+    /* width: 200px; */
+    flex-grow: 1;
+  }
+`;
+
 export const LoginAndSignupForms = styled.div`
   display: flex;
-  border: 2px dashed blue;
   max-width: var(--maxWidth);
+  gap: 2rem;
 `;
 
 export const VerticalDivider = styled.div`
-  border-left: 6px solid var(--blueblood);
-  height: 500px;
+  border-left: 3px solid var(--blueblood);
+  height: 180px;
 `;
 
-export const LoginForm = styled.form`
-  border: 2px solid red;
+export const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  margin: auto 0;
+
+  input {
+    height: 38px;
+    padding: 0 0.5rem;
+  }
 `;
-
-export const SignupForm = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-// export const ActionButton = styled.button`
-//   background-color: var(--jazz-blue);
-//   color: white;
-//   padding: 0.5rem;
-//   border: 2px solid rgba(255, 255, 255, 0.5);
-//   border-radius: 0.5rem;
-//   cursor: pointer;
-//   transition: all 0.2s ease-in-out;
-//   font-size: 1rem;
-
-//   &:hover {
-//     background-color: var(--bright-orange);
-//     border: 2px solid var(--shrimp-toast);
-
-//     text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
-//   }
-// `;

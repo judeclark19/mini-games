@@ -49,7 +49,7 @@ export const ChooseAGame = styled.div`
 export const GameOptions = styled.div<{
   $isMenuOpen: boolean;
 }>`
-  height: ${(props) => (props.$isMenuOpen ? "170px" : "0px")};
+  height: ${(props) => (props.$isMenuOpen ? "180px" : "0px")};
   width: 200px;
   padding: ${(props) => (props.$isMenuOpen ? "0.5rem" : "0px")};
 
@@ -58,7 +58,7 @@ export const GameOptions = styled.div<{
   position: absolute;
   border: 2px solid rgba(255, 255, 255, 0.5);
   background-color: var(--jazz-blue);
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   top: 2rem;
 
   display: flex;
@@ -70,7 +70,7 @@ export const GameOptions = styled.div<{
 
 export const GameOption = styled(Link)`
   padding: 5px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   &:hover {
     background-color: var(--bright-orange);
     text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);

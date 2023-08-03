@@ -2,9 +2,9 @@
 
 import React from "react";
 import {
+  AuthForm,
   LoginAndSignupForms,
-  LoginForm,
-  SignupForm,
+  OR,
   StyledGoogleButton,
   VerticalDivider,
 } from "./LoginPage.styles";
@@ -25,7 +25,13 @@ function LoginPage() {
   });
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "2rem",
+      }}
+    >
       <StyledGoogleButton
         onClick={() => {
           newGoogleUser.mutate();
@@ -33,8 +39,13 @@ function LoginPage() {
       >
         Sign in with Google
       </StyledGoogleButton>
+      <OR>
+        <div />
+        <h2>OR</h2>
+        <div />
+      </OR>
       <LoginAndSignupForms>
-        <LoginForm>
+        <AuthForm>
           {/* email */}
           <input type="email" name="email" id="email" placeholder="email" />
           {/* password */}
@@ -48,10 +59,10 @@ function LoginPage() {
           <button className="actionButton" type="submit">
             Log In
           </button>
-        </LoginForm>
+        </AuthForm>
 
         <VerticalDivider />
-        <SignupForm>
+        <AuthForm>
           {/* username */}
           <input
             type="text"
@@ -72,9 +83,9 @@ function LoginPage() {
           <button type="submit" className="actionButton">
             Sign Up
           </button>
-        </SignupForm>
+        </AuthForm>
       </LoginAndSignupForms>
-    </>
+    </div>
   );
 }
 
