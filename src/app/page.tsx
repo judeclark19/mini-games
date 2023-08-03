@@ -14,35 +14,23 @@ import Header from "@/components/Header";
 import { User, onAuthStateChanged } from "firebase/auth";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchUsers, fetchGames } from "@/lib/queries";
+// import { fetchUsers, fetchGames } from "@/lib/queries";
 import UsersList from "@/components/UsersList";
 
-const registerEmail = async ({
-  username,
-  email,
-  password,
-}: {
-  username: string;
-  email: string;
-  password: string;
-}) => {
-  return await signUpWithEmail(username, email, password);
-};
-
 const Home: NextPage = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const users = useQuery({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
-  });
+  // const users = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: fetchUsers,
+  // });
 
-  const newUser = useMutation(registerEmail, {
-    onSuccess: () => {
-      console.log("SUCCESS");
-      queryClient.invalidateQueries(["users"]);
-    },
-  });
+  // const newUser = useMutation(registerEmail, {
+  //   onSuccess: () => {
+  //     console.log("SUCCESS");
+  //     queryClient.invalidateQueries(["users"]);
+  //   },
+  // });
 
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   useEffect(() => {

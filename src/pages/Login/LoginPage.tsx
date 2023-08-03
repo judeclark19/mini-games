@@ -9,10 +9,17 @@ import {
   VerticalDivider,
 } from "./LoginPage.styles";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signInWithGoogle } from "@/firebase/clientApp";
+import {
+  signInWithEmail,
+  signInWithGoogle,
+  signUpWithEmail,
+} from "@/firebase/clientApp";
+import { useRouter } from "next/navigation";
 
 function LoginPage() {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const registerGoogle = async () => {
     return await signInWithGoogle();
   };
@@ -21,6 +28,26 @@ function LoginPage() {
     onSuccess: () => {
       console.log("SUCCESS");
       queryClient.invalidateQueries(["users"]);
+      router.push("/");
+    },
+  });
+
+  const registerEmail = async ({
+    username,
+    email,
+    password,
+  }: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
+    return await signUpWithEmail(username, email, password);
+  };
+  const newUser = useMutation(registerEmail, {
+    onSuccess: () => {
+      console.log("SUCCESS");
+      queryClient.invalidateQueries(["users"]);
+      router.push("/");
     },
   });
 
@@ -45,7 +72,19 @@ function LoginPage() {
         <div />
       </OR>
       <LoginAndSignupForms>
-        <AuthForm>
+        <AuthForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+
+            signInWithEmail(
+              formData.get("email") as string,
+              formData.get("password") as string
+            );
+
+            router.push("/");
+          }}
+        >
           {/* email */}
           <input type="email" name="email" id="email" placeholder="email" />
           {/* password */}
@@ -62,7 +101,17 @@ function LoginPage() {
         </AuthForm>
 
         <VerticalDivider />
-        <AuthForm>
+        <AuthForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const username = formData.get("username") as string;
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
+
+            newUser.mutate({ username, email, password });
+          }}
+        >
           {/* username */}
           <input
             type="text"

@@ -2,7 +2,7 @@
 
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { auth } from "@/firebase/clientApp";
+import { auth, signOutFirebase } from "@/firebase/clientApp";
 import {
   HeaderContent,
   HeaderLeft,
@@ -43,18 +43,23 @@ function Header() {
           <GamesListDropdown />
           <LoggedInUser>
             {loggedInUser ? (
-              `Logged in as ${loggedInUser.email}`
+              <>
+                Logged in as <span>{loggedInUser.displayName}</span>
+              </>
             ) : (
               <>
                 Playing as <span>Guest</span>
               </>
             )}
           </LoggedInUser>
-          {!loggedInUser && (
-            <Link href={`/login`} className="actionButton">
-              Log In or Sign Up
-            </Link>
-          )}
+
+          <Link
+            onClick={signOutFirebase}
+            href={loggedInUser ? "/" : "/login"}
+            className="actionButton"
+          >
+            {loggedInUser ? "Log Out" : "Log In or Sign Up"}
+          </Link>
         </HeaderRight>
       </HeaderContent>
     </StyledHeader>
