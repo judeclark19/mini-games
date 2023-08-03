@@ -1,11 +1,11 @@
-import { fetchScoresByUserId } from "@/lib/queries";
+import { fetchData } from "@/lib/queries";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 function UserScoreList({ userId }: { userId: string }) {
   const scores = useQuery({
     queryKey: ["scores", userId],
-    queryFn: () => fetchScoresByUserId(userId),
+    queryFn: () => fetchData(`/api/scores/${userId}`),
   });
 
   return (

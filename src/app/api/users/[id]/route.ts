@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { firestore } from "@/firebase/clientApp"; // Your Firebase configuration import
+import { firestore } from "@/firebase/clientApp";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -11,7 +11,6 @@ export async function GET(
     const userSnapshot = await getDoc(userRef);
     if (userSnapshot.exists()) {
       const userData = userSnapshot.data();
-      //   return { id: userSnapshot.id, ...userData };
       return new Response(
         JSON.stringify({ id: userSnapshot.id, ...userData }),
         {
@@ -23,7 +22,6 @@ export async function GET(
     }
   } catch (error) {
     console.error("Error fetching data:", error);
-    // return { error: "Internal server error" };
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       headers: { "Content-Type": "application/json" },
     });

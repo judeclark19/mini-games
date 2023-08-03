@@ -1,6 +1,5 @@
-import SingleGamePage from "@/pages/SingleGamePage/SingleGamePage";
+import SingleGamePage from "@/pages/SingleGame/SingleGamePage";
 import { gameSlugToTitle } from "@/lib/types";
-import React from "react";
 
 export async function generateMetadata({
   params,
@@ -13,8 +12,6 @@ export async function generateMetadata({
 }
 
 function GamePage() {
-  //get id from params
-
   return <SingleGamePage />;
 }
 

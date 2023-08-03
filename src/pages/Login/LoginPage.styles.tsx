@@ -51,7 +51,6 @@ export const OR = styled.div`
 
   div {
     border-bottom: 3px solid var(--jazz-blue);
-    /* width: 200px; */
     flex-grow: 1;
   }
 `;
