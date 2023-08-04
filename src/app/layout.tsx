@@ -28,7 +28,6 @@ export default function RootLayout({
             <TanstackQuery>
               <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
                 <Header />
-                USER: {loggedInUser?.displayName}
                 <div className="children">
                   <div>{children}</div>
                 </div>
