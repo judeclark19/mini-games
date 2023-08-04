@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext } from "react";
-import { signOutFirebase } from "@/firebase/clientApp";
+import { useContext, useEffect } from "react";
+import { auth, signOutFirebase } from "@/firebase/clientApp";
 import {
   HeaderContent,
   HeaderLeft,
@@ -12,9 +12,30 @@ import {
 import GamesListDropdown from "./GamesListDropdown";
 import Link from "next/link";
 import UserContext from "@/lib/UserContext";
+// import { setPersistence } from "firebase/auth/cordova";
+import {
+  browserLocalPersistence,
+  onAuthStateChanged,
+  setPersistence,
+} from "firebase/auth";
 
 function Header() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  console.log("loggedInUser", loggedInUser);
+
+  useEffect(() => {
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        console.log("Local persistence enabled");
+
+        return onAuthStateChanged(auth, (user) => {
+          setLoggedInUser(user);
+        });
+      })
+      .catch((error) => {
+        console.log("Error setting session persistence:", error);
+      });
+  }, []);
 
   return (
     <StyledHeader>
