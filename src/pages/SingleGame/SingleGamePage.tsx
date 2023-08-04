@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
 function SingleGamePage() {
-  const { slug } = useParams();
+  const { slug } = (useParams() as { slug: string }) || {};
 
   const game = useQuery({
     queryKey: ["game"],
@@ -14,8 +14,6 @@ function SingleGamePage() {
       return fetchData(`/api/games/${gameSlugToId[slug as string]}`);
     },
   });
-
-  console.log("game", game.data);
 
   return <div>SingleGamePage {game.data?.title}</div>;
 }

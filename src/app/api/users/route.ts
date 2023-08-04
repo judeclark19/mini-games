@@ -28,16 +28,10 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    console.log(body);
+
     const usersRef = collection(firestore, "users");
 
-    addDoc(usersRef, { ...body, createdAt: new Date() })
-      .then((docRef) => {
-        console.log("Document has been added successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await addDoc(usersRef, { ...body, createdAt: new Date() });
 
     return new Response(JSON.stringify({ success: "user added", body }), {
       headers: { "Content-Type": "application/json" },

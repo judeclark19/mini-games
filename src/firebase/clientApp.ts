@@ -1,77 +1,63 @@
 import {
+  User,
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
+  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth, firestore, provider } from ".";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
-const signInWithGoogle = async () => {
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current session
+    // You can also use 'local' or 'none' if you prefer different persistence options
+    console.log("Session persistence enabled");
+  })
+  .catch((error) => {
+    console.log("Error setting session persistence:", error);
+  });
+
+const signInWithGoogle = async (
+  setLoggedInUser: (user: User | null) => void
+) => {
   try {
     const result = await signInWithPopup(auth, provider);
 
-    const name = result.user.displayName;
-    const email = result.user.email;
+    setLoggedInUser(result.user);
 
-    localStorage.setItem("name", name as string);
-    localStorage.setItem("email", email as string);
-
-    const userDocRef = doc(firestore, "users", result.user.uid);
-    const docSnap = await getDoc(userDocRef);
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-      try {
-        await setDoc(userDocRef, {
-          createdAt: serverTimestamp(),
-          username: name, // Using the display name as the username in this case
-          email: email,
-        });
-
-        console.log("User document created successfully");
-        // Additional code after creating user document if needed
-      } catch (error) {
-        console.error("Error creating user document:", error);
-        // Handle error if necessary
-      }
-    }
-    return Promise.resolve(); // Add this line
+    return Promise.resolve();
   } catch (error) {
     console.error("Error getting document or sign in:", error);
   }
 };
 
-const signUpWithEmail = (username: string, email: string, password: string) => {
+const signUpWithEmail = (
+  username: string,
+  email: string,
+  password: string,
+  setLoggedInUser: (user: User | null) => void
+) => {
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-
-      // Set the display name of the user using the incoming username
       if (auth.currentUser) {
         return updateProfile(auth.currentUser, {
           displayName: username,
-        })
-          .then(() => {
-            console.log("Display name set successfully:", username);
-
-            const userDocRef = doc(firestore, "users", user.uid);
-            return setDoc(userDocRef, {
-              createdAt: serverTimestamp(),
-              username: username,
-              email: email,
-            }).then(() => {
-              console.log("User document created successfully");
-              // Additional code after setting the display name and creating user document if needed
-            });
-          })
-          .catch((error) => {
-            console.error("Error setting display name:", error);
-            // Handle error if necessary
+        }).then(() => {
+          const userDocRef = doc(firestore, "users", user.uid);
+          return setDoc(userDocRef, {
+            createdAt: serverTimestamp(),
+            username: username,
+            email: email,
+          }).then(() => {
+            // set UserContext
+            setLoggedInUser(auth.currentUser);
           });
+        });
       } else {
         throw new Error("No current user");
       }
@@ -84,13 +70,17 @@ const signUpWithEmail = (username: string, email: string, password: string) => {
     });
 };
 
-const signInWithEmail = (email: string, password: string) => {
+const signInWithEmail = (
+  email: string,
+  password: string,
+  setLoggedInUser: (user: User | null) => void
+) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
       console.log("User signed in", user);
-      // ...
+      setLoggedInUser(user);
     })
     .catch((error) => {
       const errorCode = error.code;
