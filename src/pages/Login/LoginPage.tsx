@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   AuthForm,
   LoginAndSignupForms,
@@ -15,13 +15,15 @@ import {
   signUpWithEmail,
 } from "@/firebase/clientApp";
 import { useRouter } from "next/navigation";
+import UserContext from "@/lib/UserContext";
 
 function LoginPage() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { setLoggedInUser } = useContext(UserContext);
 
   const registerGoogle = async () => {
-    return await signInWithGoogle();
+    return await signInWithGoogle(setLoggedInUser);
   };
 
   const newGoogleUser = useMutation(registerGoogle, {
@@ -41,7 +43,7 @@ function LoginPage() {
     email: string;
     password: string;
   }) => {
-    return await signUpWithEmail(username, email, password);
+    return await signUpWithEmail(username, email, password, setLoggedInUser);
   };
   const newUser = useMutation(registerEmail, {
     onSuccess: () => {
@@ -79,19 +81,25 @@ function LoginPage() {
 
             signInWithEmail(
               formData.get("email") as string,
-              formData.get("password") as string
+              formData.get("password") as string,
+              setLoggedInUser
             );
 
             router.push("/");
           }}
         >
           {/* email */}
-          <input type="email" name="email" id="email" placeholder="email" />
+          <input
+            type="email"
+            name="email"
+            id="email-login"
+            placeholder="email"
+          />
           {/* password */}
           <input
             type="password"
             name="password"
-            id="password"
+            id="password-login"
             placeholder="password"
           />
           {/* submit */}
@@ -120,12 +128,17 @@ function LoginPage() {
             placeholder="username"
           />
           {/* email */}
-          <input type="email" name="email" id="email" placeholder="email" />
+          <input
+            type="email"
+            name="email"
+            id="email-signup"
+            placeholder="email"
+          />
           {/* password */}
           <input
             type="password"
             name="password"
-            id="password"
+            id="password-signup"
             placeholder="password"
           />
           {/* submit */}

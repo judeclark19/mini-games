@@ -1,36 +1,21 @@
 "use client";
 
 import { User, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { auth, signOutFirebase } from "@/firebase/clientApp";
 import {
   HeaderContent,
   HeaderLeft,
   HeaderRight,
   LoggedInUser,
-  LoginButton,
   StyledHeader,
 } from "./Header.styles";
 import GamesListDropdown from "./GamesListDropdown";
 import Link from "next/link";
+import UserContext from "@/lib/UserContext";
 
 function Header() {
-  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
-  useEffect(() => {
-    // Set up the onAuthStateChanged listener
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("user", user);
-      if (user) {
-        // User is signed in
-        setLoggedInUser(user);
-      } else {
-        // User is signed out
-        setLoggedInUser(null);
-      }
-    });
-    // Clean up the listener when the component unmounts
-    return () => unsubscribe();
-  }, []);
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   return (
     <StyledHeader>
@@ -42,6 +27,7 @@ function Header() {
         <HeaderRight>
           <GamesListDropdown />
           <LoggedInUser>
+            {/* username here */}
             {loggedInUser ? (
               <>
                 Logged in as <span>{loggedInUser.displayName}</span>
@@ -54,10 +40,15 @@ function Header() {
           </LoggedInUser>
 
           <Link
-            onClick={signOutFirebase}
+            onClick={() => {
+              signOutFirebase();
+              setLoggedInUser(null);
+            }}
             href={loggedInUser ? "/" : "/login"}
+            // href={"/"}
             className="actionButton"
           >
+            {/* log out */}
             {loggedInUser ? "Log Out" : "Log In or Sign Up"}
           </Link>
         </HeaderRight>
