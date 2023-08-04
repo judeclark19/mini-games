@@ -1,13 +1,25 @@
 import {
   User,
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
+  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth, firestore, provider } from ".";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current session
+    // You can also use 'local' or 'none' if you prefer different persistence options
+    console.log("Session persistence enabled");
+  })
+  .catch((error) => {
+    console.log("Error setting session persistence:", error);
+  });
 
 const signInWithGoogle = async (
   setLoggedInUser: (user: User | null) => void

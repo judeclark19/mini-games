@@ -28,16 +28,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    console.log(body);
     const gamesRef = collection(firestore, "games");
 
-    addDoc(gamesRef, body)
-      .then((docRef) => {
-        console.log("Document has been added successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await addDoc(gamesRef, body);
 
     return new Response(JSON.stringify({ success: "game added", body }), {
       headers: { "Content-Type": "application/json" },

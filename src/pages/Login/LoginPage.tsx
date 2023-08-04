@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import { useContext } from "react";
 import {
   AuthForm,
   LoginAndSignupForms,
@@ -28,7 +28,6 @@ function LoginPage() {
 
   const newGoogleUser = useMutation(registerGoogle, {
     onSuccess: () => {
-      console.log("SUCCESS");
       queryClient.invalidateQueries(["users"]);
       router.push("/");
     },
@@ -47,7 +46,6 @@ function LoginPage() {
   };
   const newUser = useMutation(registerEmail, {
     onSuccess: () => {
-      console.log("SUCCESS");
       queryClient.invalidateQueries(["users"]);
       router.push("/");
     },
