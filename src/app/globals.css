@@ -32,7 +32,8 @@ body {
 
 body {
   color: var(--black);
-  background-color: var(--monet-moonrise);
+  /* background-color: var(--monet-moonrise); */
+  background-color: var(--white);
 }
 
 main {
@@ -67,7 +68,7 @@ a {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
-  font-family: "Nunito Sans", sans-serif;
+  /* font-family: "Nunito Sans", sans-serif; */
 }
 
 .actionButton:hover {

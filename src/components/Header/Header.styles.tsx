@@ -3,7 +3,9 @@ import Link from "next/link";
 
 export const StyledHeader = styled.header`
   color: var(--white);
-  background-color: var(--blueblood);
+
+  background-color: var(--monet-moonrise);
+  color: var(--blueblood);
   width: 100vw;
   padding: 2rem;
 `;
@@ -60,8 +62,10 @@ export const GameOptions = styled.div<{
   overflow-y: auto;
   transition: all 0.3s ease-in-out;
   position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background-color: var(--jazz-blue);
+  /* border: 1px solid rgba(255, 255, 255, 0.5); */
+  border: ${(props) => (props.$isMenuOpen ? "1px solid var(--white)" : "none")};
+  /* background-color: var(--jazz-blue); */
+  background-color: var(--monet-moonrise);
   top: 2rem;
 
   display: flex;
@@ -76,6 +80,7 @@ export const GameOption = styled(Link)`
 
   &:hover {
     background-color: var(--bright-orange);
+    color: var(--white);
     text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
   }
 `;

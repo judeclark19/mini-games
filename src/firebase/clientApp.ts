@@ -59,8 +59,8 @@ const signUpWithEmail = (
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      if (auth.currentUser) {
-        return updateProfile(auth.currentUser, {
+      if (user) {
+        return updateProfile(user, {
           displayName: username,
         }).then(() => {
           const userDocRef = doc(firestore, "users", user.uid);
@@ -69,8 +69,13 @@ const signUpWithEmail = (
             username: username,
             email: email,
           }).then(() => {
+            // Manually construct the updated user object
+            const updatedUser = {
+              ...user,
+              displayName: username,
+            };
             // set UserContext
-            setLoggedInUser(auth.currentUser);
+            setLoggedInUser(updatedUser);
           });
         });
       } else {
