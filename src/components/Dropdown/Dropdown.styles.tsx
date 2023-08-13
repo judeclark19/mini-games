@@ -34,7 +34,7 @@ export const DropdownOptions = styled.div<{
 
   border-radius: 0 0 0.5rem 0.5rem;
   background-color: var(--blue);
-  top: 2rem;
+  top: 2.5rem;
   left: 0;
 
   opacity: ${({ $isMenuOpen }) => ($isMenuOpen ? "1" : "0")};

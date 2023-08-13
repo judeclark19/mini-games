@@ -55,12 +55,6 @@ export const OR = styled.div`
   }
 `;
 
-export const LoginAndSignupForms = styled.div`
-  display: flex;
-  max-width: var(--maxWidth);
-  gap: 2rem;
-`;
-
 export const VerticalDivider = styled.div`
   border-left: 3px solid var(--blue);
   height: 180px;

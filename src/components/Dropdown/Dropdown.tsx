@@ -1,4 +1,4 @@
-import { GameOption } from "@/lib/types";
+import { DropdownType } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
 import {
   DropdownMenu,
@@ -12,18 +12,18 @@ function Dropdown({
   data,
   promptText,
 }: {
-  data: GameOption[];
+  data: DropdownType[];
   promptText: JSX.Element;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!isMenuOpen) return; // Only set up the listener if the menu is open
+    if (!isMenuOpen) return;
 
     const handleOutsideClick = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsMenuOpen(false); // Close the menu if the click was outside
+        setIsMenuOpen(false);
       }
     };
 
@@ -45,14 +45,14 @@ function Dropdown({
     >
       <div
         style={{
-          marginRight: "2rem",
+          marginRight: "1rem",
         }}
       >
         {promptText}
       </div>
       <Image src={dropdownArrow} alt="" height={12} width={12} />
       <DropdownOptions $isMenuOpen={isMenuOpen} $numOfOptions={data?.length}>
-        {data?.map((item: GameOption) => (
+        {data?.map((item: DropdownType) => (
           <DropdownOption key={item.id} href={item.href}>
             <div>{item.title}</div>
           </DropdownOption>
