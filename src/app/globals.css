@@ -1,14 +1,15 @@
 :root {
   --max-width: 1200px;
 
-  --bright-orange: #ff6b35;
-  --shrimp-toast: #f7c59f;
-  --monet-moonrise: #efefd0;
-  --blueblood: #004e89;
-  --jazz-blue: #1a659e;
-
   --white: #ffffff;
   --black: #000000;
+
+  --konkikyo-blue: linear-gradient(to bottom right, #181e45, #191e46);
+  --blue-tang: #29486C;
+  --fly-by-night: #1f204c;
+  --aurichalcite: #26FDE3;
+  --bundaberg-sand: #FEC788;
+  --avant-garde-pink: #F773F0;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -31,9 +32,8 @@ body {
 }
 
 body {
-  color: var(--black);
-  /* background-color: var(--monet-moonrise); */
-  background-color: var(--white);
+  color: var(--white);
+  background: var(--konkikyo-blue);
 }
 
 main {
@@ -60,21 +60,20 @@ a {
 }
 
 .actionButton {
-  background-color: var(--jazz-blue);
-  color: white;
-  padding: 0.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  /* border-radius: 0.5rem; */
+  background-color: var(--avant-garde-pink);
+  padding: 0.8rem 1rem;
+  color: var(--white);
+  text-shadow: 0 0px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
+  border: 2px rgba(0, 0, 0, 0.7) outset;
   /* font-family: "Nunito Sans", sans-serif; */
 }
 
 .actionButton:hover {
-  background-color: var(--bright-orange);
-  border: 2px solid var(--shrimp-toast);
-
+  background-color: var(--bundaberg-sand);
   text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
 }
 

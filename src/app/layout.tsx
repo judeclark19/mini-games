@@ -2,7 +2,7 @@
 
 import StyledComponentsRegistry from "@/lib/registry";
 import "./globals.css";
-import { Inter, Nunito_Sans } from "next/font/google";
+import { Inter, Nunito_Sans, Rubik } from "next/font/google";
 import TanstackQuery from "./tanstackQuery";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
@@ -12,6 +12,7 @@ import UserContext from "@/lib/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const nunitoSans = Nunito_Sans({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -22,7 +23,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={rubik.className}>
         <main>
           <StyledComponentsRegistry>
             <TanstackQuery>

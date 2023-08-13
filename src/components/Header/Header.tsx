@@ -49,7 +49,7 @@ function Header() {
           <LoggedInUser>
             {loggedInUser ? (
               <>
-                Logged in as <span>{loggedInUser.displayName}</span>
+                Logged in as <Link href="/">{loggedInUser.displayName}</Link>
               </>
             ) : (
               <>

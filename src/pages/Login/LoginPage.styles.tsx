@@ -47,10 +47,10 @@ export const OR = styled.div`
   align-items: center;
   gap: 1rem;
   font-family: "Inter", sans-serif;
-  color: var(--jazz-blue);
+  color: var(--aurichalcite);
 
   div {
-    border-bottom: 3px solid var(--jazz-blue);
+    border-bottom: 3px solid var(--aurichalcite);
     flex-grow: 1;
   }
 `;
@@ -62,7 +62,7 @@ export const LoginAndSignupForms = styled.div`
 `;
 
 export const VerticalDivider = styled.div`
-  border-left: 3px solid var(--blueblood);
+  border-left: 3px solid var(--aurichalcite);
   height: 180px;
 `;
 

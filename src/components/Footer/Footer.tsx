@@ -3,10 +3,8 @@
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
-  /* background-color: var(--blueblood); */
-  background-color: var(--monet-moonrise);
-  /* color: var(--white); */
-  color: var(--blueblood);
+  background-color: #1f204c;
+  color: var(--white);
   width: 100vw;
   padding: 2rem;
   text-align: center;
@@ -14,7 +12,7 @@ const StyledFooter = styled.footer`
   a {
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--bright-orange);
+    color: var(--bundaberg-sand);
 
     // hover
     &:hover {
