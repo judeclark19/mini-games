@@ -13,6 +13,11 @@ export type GameDoc = {
   slug: string;
 };
 
+export type DropdownType = {
+  title: string;
+  id: string;
+  href: string;
+};
 // I wrote these out because otherwise I don't know how I would get the game title onto the SingleGamePage metadata because a page with metadata can't fetch
 export const gameSlugToId: Record<string, string> = {
   "tic-tac-toe": "J2yPhZKiOLvCURWabmyw",

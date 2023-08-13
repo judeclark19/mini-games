@@ -1,4 +1,3 @@
-// UserContext.ts
 import { User } from "firebase/auth";
 import { Dispatch, SetStateAction, createContext } from "react";
 

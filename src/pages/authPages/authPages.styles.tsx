@@ -47,22 +47,16 @@ export const OR = styled.div`
   align-items: center;
   gap: 1rem;
   font-family: "Inter", sans-serif;
-  color: var(--jazz-blue);
+  color: var(--blue);
 
   div {
-    border-bottom: 3px solid var(--jazz-blue);
+    border-bottom: 3px solid var(--blue);
     flex-grow: 1;
   }
 `;
 
-export const LoginAndSignupForms = styled.div`
-  display: flex;
-  max-width: var(--maxWidth);
-  gap: 2rem;
-`;
-
 export const VerticalDivider = styled.div`
-  border-left: 3px solid var(--blueblood);
+  border-left: 3px solid var(--blue);
   height: 180px;
 `;
 

@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export const StyledHeader = styled.header`
   color: var(--white);
-  background-color: var(--blueblood);
   width: 100vw;
   padding: 2rem;
 `;
@@ -16,7 +15,11 @@ export const HeaderContent = styled.div`
   align-items: center;
 `;
 
-export const HeaderLeft = styled.div``;
+export const HeaderLeft = styled.div`
+  h3 {
+    color: var(--blue);
+  }
+`;
 
 export const HeaderRight = styled.div`
   display: flex;
@@ -24,58 +27,13 @@ export const HeaderRight = styled.div`
   align-items: center;
 `;
 
-export const LoggedInUser = styled.div`
+export const LoggedInUser = styled.div<{
+  $isLoggedIn: boolean;
+}>`
   span {
+    color: ${({ $isLoggedIn }) =>
+      $isLoggedIn ? "var(--blue)" : "var(--orange)"};
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--bright-orange);
-  }
-`;
-
-export const ChooseAGame = styled.div<{
-  $isMenuOpen: boolean;
-}>`
-  position: relative;
-  padding: 0.5rem;
-  width: 210px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  img {
-    transform: ${({ $isMenuOpen }) =>
-      !$isMenuOpen ? "rotate(180deg)" : "none"};
-    transition: all 0.3s ease-in-out;
-  }
-`;
-
-export const GameOptions = styled.div<{
-  $isMenuOpen: boolean;
-}>`
-  height: ${(props) => (props.$isMenuOpen ? "180px" : "0px")};
-  width: 200px;
-  padding: ${(props) => (props.$isMenuOpen ? "0.5rem" : "0px")};
-
-  overflow-y: auto;
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background-color: var(--jazz-blue);
-  top: 2rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
-`;
-
-export const GameOption = styled(Link)`
-  padding: 5px;
-
-  &:hover {
-    background-color: var(--bright-orange);
-    text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
   }
 `;

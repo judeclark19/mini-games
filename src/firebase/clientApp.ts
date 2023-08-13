@@ -1,25 +1,13 @@
 import {
   User,
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
-  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth, firestore, provider } from ".";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-
-setPersistence(auth, browserSessionPersistence)
-  .then(() => {
-    // Existing and future Auth states are now persisted in the current session
-    // You can also use 'local' or 'none' if you prefer different persistence options
-    console.log("Session persistence enabled");
-  })
-  .catch((error) => {
-    console.log("Error setting session persistence:", error);
-  });
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 const signInWithGoogle = async (
   setLoggedInUser: (user: User | null) => void
@@ -27,8 +15,35 @@ const signInWithGoogle = async (
   try {
     const result = await signInWithPopup(auth, provider);
 
-    setLoggedInUser(result.user);
+    const username = result.user.displayName;
+    const email = result.user.email;
 
+    localStorage.setItem("username", username as string);
+    localStorage.setItem("email", email as string);
+
+    const userDocRef = doc(firestore, "users", result.user.uid);
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+      try {
+        await setDoc(userDocRef, {
+          createdAt: serverTimestamp(),
+          username, // Using the display name as the username in this case
+          email,
+        });
+
+        console.log("User document created successfully");
+        // Additional code after creating user document if needed
+      } catch (error) {
+        console.error("Error creating user document:", error);
+        // Handle error if necessary
+      }
+    }
+
+    setLoggedInUser(result.user);
     return Promise.resolve();
   } catch (error) {
     console.error("Error getting document or sign in:", error);
@@ -44,8 +59,8 @@ const signUpWithEmail = (
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      if (auth.currentUser) {
-        return updateProfile(auth.currentUser, {
+      if (user) {
+        return updateProfile(user, {
           displayName: username,
         }).then(() => {
           const userDocRef = doc(firestore, "users", user.uid);
@@ -54,8 +69,13 @@ const signUpWithEmail = (
             username: username,
             email: email,
           }).then(() => {
+            // Manually construct the updated user object
+            const updatedUser = {
+              ...user,
+              displayName: username,
+            };
             // set UserContext
-            setLoggedInUser(auth.currentUser);
+            setLoggedInUser(updatedUser);
           });
         });
       } else {
