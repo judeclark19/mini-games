@@ -70,8 +70,6 @@ a {
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
   font-weight: 700;
-  /* border: 2px rgba(0, 0, 0, 0.7) outset; */
-  /* font-family: "Nunito Sans", sans-serif; */
 }
 
 .actionButton:hover {
