@@ -9,15 +9,17 @@ import {
   LoggedInUser,
   StyledHeader,
 } from "./Header.styles";
-import GamesListDropdown from "./GamesListDropdown";
 import Link from "next/link";
 import UserContext from "@/lib/UserContext";
-// import { setPersistence } from "firebase/auth/cordova";
 import {
   browserLocalPersistence,
   onAuthStateChanged,
   setPersistence,
 } from "firebase/auth";
+import Dropdown from "../Dropdown/Dropdown";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "@/lib/queries";
+import { GameDoc } from "@/lib/types";
 
 function Header() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
@@ -37,6 +39,18 @@ function Header() {
       });
   }, []);
 
+  const games = useQuery({
+    queryKey: ["games"],
+    queryFn: () => {
+      return fetchData("/api/games");
+    },
+  });
+
+  const gamesOptions = games.data?.map((game: GameDoc) => ({
+    ...game,
+    href: `/games/${game.id}`,
+  }));
+
   return (
     <StyledHeader>
       <HeaderContent>
@@ -45,7 +59,7 @@ function Header() {
           <h3>An exercise in TypeScript and Next.js v13</h3>
         </HeaderLeft>
         <HeaderRight>
-          <GamesListDropdown />
+          <Dropdown data={gamesOptions} promptText="Choose a game" />
           <LoggedInUser>
             {loggedInUser ? (
               <>

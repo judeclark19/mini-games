@@ -10,6 +10,13 @@
   --aurichalcite: #26FDE3;
   --bundaberg-sand: #FEC788;
   --avant-garde-pink: #F773F0;
+
+  --light-blue: #8ECAE6;
+  --blue: #219EBC;
+  --dark-blue: #023047;
+  --yellow: #FFB703;
+  --orange: #FB8500;
+
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -33,7 +40,7 @@ body {
 
 body {
   color: var(--white);
-  background: var(--konkikyo-blue);
+  background: var(--dark-blue);
 }
 
 main {

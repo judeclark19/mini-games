@@ -1,21 +1,22 @@
-import { fetchData } from "@/lib/queries";
-import { GameDoc } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
-import { ChooseAGame, GameOption, GameOptions } from "./Header.styles";
+import { GameOption } from "@/lib/types";
+import { useEffect, useRef, useState } from "react";
+import {
+  DropdownButton,
+  DropdownOption,
+  DropdownOptions,
+} from "./Dropdown.styles";
 import Image from "next/image";
 import dropdownArrow from "./dropdownArrow.svg";
 
-function GamesListDropdown() {
+function Dropdown({
+  data,
+  promptText,
+}: {
+  data: GameOption[];
+  promptText: string;
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-
-  const games = useQuery({
-    queryKey: ["games"],
-    queryFn: () => {
-      return fetchData("/api/games");
-    },
-  });
 
   useEffect(() => {
     if (!isMenuOpen) return; // Only set up the listener if the menu is open
@@ -35,24 +36,24 @@ function GamesListDropdown() {
   }, [isMenuOpen]);
 
   return (
-    <ChooseAGame
+    <DropdownButton
       $isMenuOpen={isMenuOpen}
       onClick={() => {
         setIsMenuOpen(!isMenuOpen);
       }}
       ref={menuRef}
     >
-      <span>Choose a Game:</span>
+      <span>{promptText}</span>
       <Image src={dropdownArrow} alt="" height={12} width={12} />
-      <GameOptions $isMenuOpen={isMenuOpen} $numOfGames={games.data?.length}>
-        {games.data?.map((game: GameDoc) => (
-          <GameOption key={game.id} href={`/games/${game.slug}`}>
-            <div>{game.title}</div>
-          </GameOption>
+      <DropdownOptions $isMenuOpen={isMenuOpen} $numOfOptions={data?.length}>
+        {data?.map((item: GameOption) => (
+          <DropdownOption key={item.id} href={item.href}>
+            <div>{item.title}</div>
+          </DropdownOption>
         ))}
-      </GameOptions>
-    </ChooseAGame>
+      </DropdownOptions>
+    </DropdownButton>
   );
 }
 
-export default GamesListDropdown;
+export default Dropdown;
