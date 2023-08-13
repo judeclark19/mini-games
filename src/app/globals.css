@@ -4,13 +4,6 @@
   --white: #ffffff;
   --black: #000000;
 
-  --konkikyo-blue: linear-gradient(to bottom right, #181e45, #191e46);
-  --blue-tang: #29486C;
-  --fly-by-night: #1f204c;
-  --aurichalcite: #26FDE3;
-  --bundaberg-sand: #FEC788;
-  --avant-garde-pink: #F773F0;
-
   --light-blue: #8ECAE6;
   --blue: #219EBC;
   --dark-blue: #023047;
@@ -67,20 +60,22 @@ a {
 }
 
 .actionButton {
-  background-color: var(--avant-garde-pink);
+  background-color: var(--orange);
   padding: 0.8rem 1rem;
   color: var(--white);
   text-shadow: 0 0px 4px rgba(0, 0, 0, 0.5);
+  border: none;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
-  border: 2px rgba(0, 0, 0, 0.7) outset;
+  font-weight: 700;
+  /* border: 2px rgba(0, 0, 0, 0.7) outset; */
   /* font-family: "Nunito Sans", sans-serif; */
 }
 
 .actionButton:hover {
-  background-color: var(--bundaberg-sand);
+  background-color: var(--yellow);
   text-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
 }
 

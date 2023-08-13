@@ -1,7 +1,7 @@
 import { GameOption } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
 import {
-  DropdownButton,
+  DropdownMenu,
   DropdownOption,
   DropdownOptions,
 } from "./Dropdown.styles";
@@ -13,7 +13,7 @@ function Dropdown({
   promptText,
 }: {
   data: GameOption[];
-  promptText: string;
+  promptText: JSX.Element;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -36,14 +36,20 @@ function Dropdown({
   }, [isMenuOpen]);
 
   return (
-    <DropdownButton
+    <DropdownMenu
       $isMenuOpen={isMenuOpen}
       onClick={() => {
         setIsMenuOpen(!isMenuOpen);
       }}
       ref={menuRef}
     >
-      <span>{promptText}</span>
+      <div
+        style={{
+          marginRight: "2rem",
+        }}
+      >
+        {promptText}
+      </div>
       <Image src={dropdownArrow} alt="" height={12} width={12} />
       <DropdownOptions $isMenuOpen={isMenuOpen} $numOfOptions={data?.length}>
         {data?.map((item: GameOption) => (
@@ -52,7 +58,7 @@ function Dropdown({
           </DropdownOption>
         ))}
       </DropdownOptions>
-    </DropdownButton>
+    </DropdownMenu>
   );
 }
 

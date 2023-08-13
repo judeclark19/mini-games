@@ -12,7 +12,7 @@ const StyledFooter = styled.footer`
   a {
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--bundaberg-sand);
+    color: var(--orange);
 
     // hover
     &:hover {

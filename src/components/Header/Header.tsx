@@ -59,20 +59,40 @@ function Header() {
           <h3>An exercise in TypeScript and Next.js v13</h3>
         </HeaderLeft>
         <HeaderRight>
-          <Dropdown data={gamesOptions} promptText="Choose a game" />
-          <LoggedInUser>
+          <Dropdown
+            data={gamesOptions}
+            promptText={<span>Choose a game</span>}
+          />
+          <Dropdown
+            data={gamesOptions}
+            promptText={
+              <LoggedInUser $isLoggedIn={!!loggedInUser}>
+                {loggedInUser ? (
+                  <>
+                    Logged in as <span>{loggedInUser.displayName}</span>
+                  </>
+                ) : (
+                  <>
+                    Playing as <span>Guest</span>
+                  </>
+                )}
+              </LoggedInUser>
+            }
+          />
+
+          {/* <LoggedInUser $isLoggedIn={!!loggedInUser}>
             {loggedInUser ? (
               <>
-                Logged in as <Link href="/">{loggedInUser.displayName}</Link>
+                Logged in as <span>{loggedInUser.displayName}</span>
               </>
             ) : (
               <>
                 Playing as <span>Guest</span>
               </>
             )}
-          </LoggedInUser>
+          </LoggedInUser> */}
 
-          <Link
+          {/* <Link
             onClick={() => {
               signOutFirebase();
               setLoggedInUser(null);
@@ -81,7 +101,7 @@ function Header() {
             className="actionButton"
           >
             {loggedInUser ? "Log Out" : "Log In or Sign Up"}
-          </Link>
+          </Link> */}
         </HeaderRight>
       </HeaderContent>
     </StyledHeader>
