@@ -27,14 +27,14 @@ function Header() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('loggedInUser changed', loggedInUser)
-  }, [loggedInUser])
+    console.log("loggedInUser changed", loggedInUser);
+  }, [loggedInUser]);
 
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
         return onAuthStateChanged(auth, (user) => {
-          console.log('auth state', auth)
+          console.log("auth state", auth);
           setLoggedInUser(user);
           setIsLoading(false);
         });
@@ -103,23 +103,25 @@ function Header() {
             data={gamesOptions}
             promptText={<span>Choose a game</span>}
           />
-          <ThreeDotsWave />
-          {/* <Dropdown
-            data={loggedInUser ? userOptions : guestOptions}
-            promptText={
-              <LoggedInUser $isLoggedIn={!!loggedInUser}>
-                {loggedInUser ? (
-                  <>
-                    Logged in as <span>{loggedInUser.displayName}</span>
-                  </>
-                ) : (
-                  <>
-                    Playing as <span>Guest</span>
-                  </>
-                )}
-              </LoggedInUser>
-            }
-          /> */}
+          <div style={{ border: "2px solid red", minWidth: "230px", display: "flex", justifyContent: "end" }}>
+            <Dropdown
+              data={loggedInUser ? userOptions : guestOptions}
+              promptText={
+                <LoggedInUser $isLoggedIn={!!loggedInUser}>
+                  {isLoading && <ThreeDotsWave />}
+                  {!isLoading && loggedInUser && (
+                    <>
+                      Logged in as <span>{loggedInUser.displayName}</span>
+                    </>
+                  )}
+                  {!isLoading && !loggedInUser && (
+                    <>Playing as <span>Guest</span>
+                    </>
+                  )}
+                </LoggedInUser>
+              }
+            />
+          </div>
         </HeaderRight>
       </HeaderContent>
     </StyledHeader>

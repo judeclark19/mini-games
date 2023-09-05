@@ -8,7 +8,6 @@ tanstack-query for data fetching/caching etc
 ## TODO
 
 - log out confirmation modal or other visual feedback
-- loading state for header
 - loading state for game page
 - Handle wrong login credentials
 - Style scrollbars
