@@ -13,3 +13,4 @@ tanstack-query for data fetching/caching etc
 - Handle wrong login credentials
 - Style scrollbars
 - Metadata tags
+- User profile pics

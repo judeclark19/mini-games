@@ -45,6 +45,7 @@ function Header() {
       return fetchData("/api/games");
     },
   });
+   console.log('games', games.data)
 
   const gamesOptions: DropdownType[] = games.data?.map((game: GameDoc) => ({
     title: game.title,
