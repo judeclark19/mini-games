@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { auth, signOutFirebase } from "@/firebase/clientApp";
 import {
   HeaderContent,
@@ -20,22 +20,28 @@ import Dropdown from "../Dropdown/Dropdown";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/lib/queries";
 import { DropdownType, GameDoc } from "@/lib/types";
+import ThreeDotsWave from "../ThreeDotsWave/ThreeDotsWave";
 
 function Header() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  console.log("loggedInUser", loggedInUser);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    console.log('loggedInUser changed', loggedInUser)
+  }, [loggedInUser])
 
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
-        console.log("Local persistence enabled");
-
         return onAuthStateChanged(auth, (user) => {
+          console.log('auth state', auth)
           setLoggedInUser(user);
+          setIsLoading(false);
         });
       })
       .catch((error) => {
         console.log("Error setting session persistence:", error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -45,7 +51,6 @@ function Header() {
       return fetchData("/api/games");
     },
   });
-   console.log('games', games.data)
 
   const gamesOptions: DropdownType[] = games.data?.map((game: GameDoc) => ({
     title: game.title,
@@ -98,7 +103,8 @@ function Header() {
             data={gamesOptions}
             promptText={<span>Choose a game</span>}
           />
-          <Dropdown
+          <ThreeDotsWave />
+          {/* <Dropdown
             data={loggedInUser ? userOptions : guestOptions}
             promptText={
               <LoggedInUser $isLoggedIn={!!loggedInUser}>
@@ -113,7 +119,7 @@ function Header() {
                 )}
               </LoggedInUser>
             }
-          />
+          /> */}
         </HeaderRight>
       </HeaderContent>
     </StyledHeader>

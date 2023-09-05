@@ -38,7 +38,7 @@ function UserProfilePage() {
 
     return (
         <PageWrapper>
-            <PageTitle>User profile for {loggedInUser?.displayName}</PageTitle>
+            <PageTitle>User profile for <span>{loggedInUser?.displayName}</span></PageTitle>
             <PageContent>
                 <UserInfo>
                     <Column>
@@ -83,7 +83,6 @@ function UserProfilePage() {
                         </div>
                     </Column>
                 </UserInfo>
-
                 <div>accordion: under construction</div></PageContent>
         </PageWrapper>
     );

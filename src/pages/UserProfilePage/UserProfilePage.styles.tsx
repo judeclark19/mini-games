@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const PageTitle = styled.h1`
   margin-bottom: 2rem;
+
+  span {
+      color: var(--orange);
+  }
 `;
 
 export const PageWrapper = styled.div`
@@ -20,9 +24,7 @@ export const PageContent = styled.div`
 export const UserInfo = styled.div`
     display: flex;
     gap: 3rem;
-
     font-size: 1.2rem;
-
 `
 
 export const Column = styled.div`
@@ -44,7 +46,7 @@ export const Value = styled.div`
 `
 
 export const Underline = styled.div`
-  height: 3px;
+  height: 1.5px;
   width: 100%;
   background-color: var(--orange);
 `;
